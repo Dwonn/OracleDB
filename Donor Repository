@@ -1,0 +1,157 @@
+CREATE TABLE Donor (
+Dnr_Type		CHAR(1)		NOT NULL,
+Dnr_Name		VARCHAR(30)	NOT NULL,
+Project_Cont		NUMBER(10,2)	NOT NULL,
+Dnr_Type_Trgt_Q1	NUMBER(10,2)	NOT NULL,
+Dnr_Type_Trgt_Q2	NUMBER(10,2)	NOT NULL,
+Dnr_Type_Trgt_Q3	NUMBER(10,2)	NOT NULL,
+Dnr_Type_Trgt_Q4	NUMBER(10,2)	NOT NULL,
+PRIMARY KEY (Dnr_Type, Dnr_Name));
+
+CREATE TABLE Campus (	 	
+Cmps_Name		VARCHAR(6)	PRIMARY KEY,
+Cmps_Trgt_Q1	NUMBER(10,2)	NOT NULL,
+Cmps_Trgt_Q2	NUMBER(10,2)	NOT NULL,
+Cmps_Trgt_Q3	NUMBER(10,2)	NOT NULL,
+Cmps_Trgt_Q4	NUMBER(10,2)	NOT NULL);
+
+CREATE TABLE Programs (
+Pgrm_Name			VARCHAR (30)	PRIMARY KEY,
+Pgrm_Cmps_Name 		VARCHAR(6) 	NOT NULL,
+CONSTRAINT Cmps_Name FOREIGN KEY(Pgrm_Cmps_Name) REFERENCES CAMPUS);
+
+CREATE TABLE Contribution (
+Cont_Date 	DATE 			NOT NULL,
+Cont_Pgrm 	VARCHAR(30) 	NOT NULL,
+Cont_Mem 	VARCHAR(20)	NOT NULL,
+Cont_Donor 	VARCHAR(30)	NOT NULL,
+Cont_Amt 	NUMBER(10,2) 	NOT NULL,
+PRIMARY KEY (Cont_Date, Cont_Pgrm, Cont_Mem, Cont_Donor),
+CONSTRAINT Pgrm_Name FOREIGN KEY (Cont_Pgrm) REFERENCES Programs);
+
+CREATE TABLE Committee_Member (
+Mem_Name		VARCHAR(20)	PRIMARY KEY,
+Mem_Trgt_Q1	NUMBER(10,2)	NOT NULL,
+Mem_Trgt_Q2	NUMBER(10,2)	NOT NULL,
+Mem_Trgt_Q3	NUMBER(10,2)	NOT NULL,
+Mem_Trgt_Q4	NUMBER(10,2)	NOT NULL,
+Dnr_Type		CHAR(1)		NOT NULL,
+CONSTRAINT Cont_Mem FOREIGN KEY (Mem_Name) REFERENCES Committee_Member);
+
+
+INSERT ALL
+INTO CAMPUS VALUES ('Main',40000,40000,50000,60000)
+INTO CAMPUS VALUES ('East',20000,25000,25000,30000)
+INTO CAMPUS VALUES ('West',7500,10000,12500,15000)
+INTO CAMPUS VALUES ('North',10000,10000,15000,15000)
+INTO PROGRAMS VALUES ('Teaching Programs','Main')
+INTO PROGRAMS VALUES ('International Programs','East')
+INTO PROGRAMS VALUES ('Applied Research','West')
+INTO PROGRAMS VALUES ('Basic Research','North')
+INTO DONOR VALUES ('I','Crabtree',5000,12500,15000,20000,27500)
+INTO DONOR VALUES ('C','Genetix',10000,40000,40000,50000,50000)
+INTO DONOR VALUES ('I','Marlo',5500,12500,15000,20000,27500)
+INTO DONOR VALUES ('F','Mervis',6000,30000,35000,40000,50000)
+INTO DONOR VALUES ('C','Orange',5000,40000,40000,50000,50000)
+INTO DONOR VALUES ('F','Roper',7000,30000,35000,40000,50000)
+INTO DONOR VALUES ('C','Keltron',8500,40000,40000,50000, 50000)
+INTO COMMITTEE_MEMBER VALUES ('Adams',20000,20000,25000,25000,'C')
+INTO COMMITTEE_MEMBER VALUES ('Baker',15000,15000,17500,20000,'F')
+INTO COMMITTEE_MEMBER VALUES ('Coffman',5000,6000,7500,7500,'I')
+INTO COMMITTEE_MEMBER VALUES ('Drummond',10000,10000,15000,15000,'F')
+INTO COMMITTEE_MEMBER VALUES ('Ebenezer',25000,30000,32500,40000,'C')
+INTO COMMITTEE_MEMBER VALUES ('Franks',7500,9000,12500,20000,'I')
+INTO CONTRIBUTION VALUES ('03-JAN-2013', 'Basic Research', 'Ebenezer', 'Genetix',20000)
+INTO CONTRIBUTION VALUES ('07-JAN-2013', 'Applied Research', 'Coffman', 'Marlo', 15000)
+INTO CONTRIBUTION VALUES ('27-JAN-2013', 'Teaching Programs', 'Adams', 'Keltron', 5000)
+INTO CONTRIBUTION VALUES ('05-FEB-2013', 'International Programs', 'Baker', 'Roper', 10000)
+INTO CONTRIBUTION VALUES ('23-FEB-2013', 'International Programs', 'Adams', 'Genetix', 5000)
+INTO CONTRIBUTION VALUES ('03-MAR-2013', 'Basic Research','Franks', 'Crabtree', 10000)
+INTO CONTRIBUTION VALUES ('30-MAR-2013', 'Basic Research', 'Adams', 'Orange', 7500)
+INTO CONTRIBUTION VALUES ('15-APR-2013', 'Teaching Programs', 'Drummond', 'Roper', 5000)
+INTO CONTRIBUTION VALUES ('09-MAY-2013', 'Applied Research', 'Baker', 'Mervis', 10000)
+INTO CONTRIBUTION VALUES ('14-MAY-2013', 'International Programs', 'Ebenezer', 'Keltron', 10000)
+INTO CONTRIBUTION VALUES ('29-MAY-2013', 'Applied Research', 'Ebenezer', 'Keltron', 10000)
+INTO CONTRIBUTION VALUES ('11-JUN-2013', 'Teaching Programs', 'Ebenezer', 'Orange', 5000)
+INTO CONTRIBUTION VALUES ('18-JUN-2013', 'Applied Research', 'Baker', 'Roper', 7500)
+INTO CONTRIBUTION VALUES ('23-JUN-2013', 'Basic Research', 'Coffman', 'Marlo', 5000)
+INTO CONTRIBUTION VALUES ('10-JUL-2013', 'Teaching Programs', 'Coffman', 'Crabtree', 10000)
+INTO CONTRIBUTION VALUES ('16-JUL-2013', 'International Programs', 'Baker', 'Mervis', 10000)
+INTO CONTRIBUTION VALUES ('22-JUL-2013', 'Applied Research', 'Drummond', 'Roper', 7500)
+INTO CONTRIBUTION VALUES ('15-AUG-2013', 'Applied Research', 'Adams', 'Orange', 6000)
+INTO CONTRIBUTION VALUES ('23-AUG-2013', 'International Programs', 'Adams', 'Genetix', 15000)
+INTO CONTRIBUTION VALUES ('09-SEP-2013', 'Applied Research', 'Franks', 'Marlo', 17500)
+INTO CONTRIBUTION VALUES ('18-SEP-2013', 'Teaching Programs', 'Baker', 'Roper', 15000)
+INTO CONTRIBUTION VALUES ('01-OCT-2013', 'International Programs', 'Ebenezer', 'Genetix', 8000)
+INTO CONTRIBUTION VALUES ('13-OCT-2013', 'Basic Research','Franks','Crabtree', 5000)
+INTO CONTRIBUTION VALUES ('30-OCT-2013', 'Applied Research', 'Adams', 'Orange', 2500)
+INTO CONTRIBUTION VALUES ('11-NOV-2013', 'Teaching Programs', 'Drummond', 'Mervis', 10000)
+INTO CONTRIBUTION VALUES ('24-NOV-2013', 'Applied Research', 'Ebenezer', 'Genetix', 10000)
+INTO CONTRIBUTION VALUES ('10-DEC-2013', 'Basic Research', 'Adams', 'Keltron', 20000)
+INTO CONTRIBUTION VALUES ('20-DEC-2013', 'International Programs', 'Franks', 'Marlo', 8500)
+SELECT * FROM dual;
+
+//a.Contributions, by campus, for the third quarter
+
+SELECT Cmps_Name AS "Campus Name", SUM(Cont_Amt) AS "Total Contributions for Q3", (SUM(Cont_Amt)/Campus.Cmps_Trgt_Q3)*100 AS "% Target Achieved Q3"
+FROM Campus, Contribution, Programs
+WHERE Cmps_Name=Pgrm_Cmps_Name
+AND Cont_Date BETWEEN TO_DATE ('2013/07/01', 'yyyy/mm/dd')
+AND TO_DATE ('2013/09/28', 'yyyy/mm/dd')
+AND Cont_Pgrm=Pgrm_Name
+GROUP BY Cmps_Name,Cmps_Trgt_Q3;
+
+//b.Contributions made by corporate donors
+
+SELECT D.Dnr_Type AS "Donor Type",SUM (C.Cont_Amt) AS "Contributions This Quarter",D.Dnr_Type_Trgt_Q3 AS "Target",(((SUM (C.Cont_Amt))/D.Dnr_Type_Trgt_Q3)*100) AS "% of Target Achieved"
+FROM Contribution C, Donor D
+WHERE D.Dnr_Name=C.Cont_Donor
+AND D.Dnr_Type='C'
+AND C.Cont_Date BETWEEN TO_DATE ('2013/07/01', 'yyyy/mm/dd')
+AND TO_DATE ('2013/09/28', 'yyyy/mm/dd')
+GROUP BY D.Dnr_Type,D.Dnr_Type_Trgt_Q3;
+
+//c.Donor category contributions, by program, for the second quarter
+
+SELECT Dnr_Type AS "Donor Type", Cont_Pgrm AS "Program", SUM(Cont_Amt) AS "Total Contributions for Q2"
+FROM Contribution C
+JOIN Donor D
+ON C.Cont_Donor=D.Dnr_Name
+WHERE Cont_Date BETWEEN TO_DATE ('2013/04/01', 'yyyy/mm/dd')
+AND TO_DATE ('2013/06/30', 'yyyy/mm/dd')
+GROUP BY Dnr_Type, Cont_Pgrm;
+
+//d.A low activity program report run in October
+
+SELECT Cont_Pgrm AS "Program", SUM(Cont_Amt) AS "Contributions"
+FROM Contribution
+WHERE Cont_date BETWEEN TO_DATE ('2013/10/01', 'yyyy/mm/dd')
+AND TO_DATE ('2013/10/31', 'yyyy/mm/dd')
+GROUP BY Cont_Pgrm
+HAVING SUM (Cont_Amt) < 50000;
+
+//e.The total dollar contribution for which Adams was responsible
+
+SELECT Cont_Mem AS "Member",SUM(Cont_Amt) AS "Total Contribution"
+FROM Contribution
+WHERE Cont_Mem='Adams'
+GROUP BY Cont_Mem;
+
+//f.The average donation per corporate contribution
+
+SELECT ROUND( AVG(C.Cont_Amt), 0) AS "Average Corporate Contribution"
+FROM Donor D,Contribution C
+WHERE C.Cont_Donor=D.Dnr_Name
+AND Dnr_Type='C';
+
+
+
+
+
+
+
+
+
+
+
+
